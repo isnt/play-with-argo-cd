@@ -1,0 +1,3 @@
+environment: staging
+image:
+  tag: 1.23
