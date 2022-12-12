@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-helm-application-with-relative-valueFiles-path
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/isnt/play-with-argo-cd.git
+    targetRevision: main
+    path: charts/deploy-me-with-argo-cd
+    helm:
+      # The path is relative to the spec.source.path directory defined above
+      valueFiles:
+        - ../../helm-values/staging/example-application.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
